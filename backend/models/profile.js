@@ -19,7 +19,7 @@ const shubhamProfile = {
     college: "Chandigarh Group of Colleges (CGC), Landran",
     degree: "Bachelor of Technology",
     branch: "Information Technology",
-    cgpa: "8.2",
+    cgpa: "7.6",
     passingYear: "2027",
   },
 
@@ -182,9 +182,9 @@ const shubhamProfile = {
     hobbies:
       [
         "Learning new technologies",
-        "Building AI projects",
-        "Coding",
-        "Reading technical blogs",
+        "Playing Cricket",
+        "Listening to music",
+        "Traveling",
       ],
   },
 
