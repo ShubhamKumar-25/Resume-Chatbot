@@ -7,12 +7,12 @@ const shubhamProfile = {
     tagline:
       "Passionate Full Stack Developer with a strong interest in AI Integration, Web Development, and Problem Solving.",
     location: "Bihar, India",
-    email: "your-email@example.com",
-    phone: "Your Phone Number",
+    email: "sk5989229@gmail.com",
+    phone: "72507-27385",
     portfolio: "https://your-portfolio.com",
-    github: "https://github.com/your-username",
-    linkedin: "https://linkedin.com/in/your-username",
-    resume: "https://your-resume-link.pdf",
+    github: "https://github.com/ShubhamKumar-25",
+    linkedin: "https://www.linkedin.com/in/shubham-kumar-3916162ba/",
+    resume: "https://drive.google.com/file/d/1czudaOX8mvMRNQLSVFFCUx_0BSQQdaMc/view?usp=drive_link",
   },
 
   education: {
@@ -96,7 +96,7 @@ const shubhamProfile = {
     {
       title: "AI Resume Analyzer",
       description:
-        "An AI-powered application that analyzes resumes, compares them with Job Descriptions, and provides improvement suggestions.",
+        "An AI-powered application that analyzes resumes, compares them with Job Descriptions, and provides improvement suggestions. This project is helpful for job seekers to optimize their resumes for better chances of getting shortlisted. Also it helpfull for HR to analyze resumes and shortlist candidates based on their skills and experience and send emails notifying them about their selection or rejection.",
       techStack: [
         "React",
         "Node.js",
@@ -109,7 +109,7 @@ const shubhamProfile = {
     {
       title: "AI Expense Tracker",
       description:
-        "Expense management system with AI-generated spending insights.",
+        "Expense management system with AI-generated spending insights. In this application, users can track their expenses and set their budget. The AI analyzes the spending patterns and provides insights to help users manage their finances better. Suppose a user spends money on like Pizza, the AI will set automatic in their food section.",
       techStack: [
         "React",
         "Node.js",
@@ -122,7 +122,7 @@ const shubhamProfile = {
     {
       title: "AI Complaint Management System",
       description:
-        "Complaint management platform where AI categorizes complaints and provides intelligent assistance.",
+        "Complaint management platform where AI categorizes complaints and provides intelligent assistance. this is a web application where users can submit their complaints, and the AI will categorize them based on their nature and urgency. The AI will also provide suggestions for resolving the complaints and assist in tracking their status.",
       techStack: [
         "React",
         "Node.js",
@@ -130,6 +130,19 @@ const shubhamProfile = {
         "MySQL",
       ],
     },
+
+    {
+      title: "My Own NexAI Application",
+      description:
+      "This is my own AI application where I have integrated Groq AI API. In this application, users can ask questions related to any topic, and the AI will provide answers based on its knowledge base. This application is designed to showcase my skills in AI integration and web development.",
+      techStack: [
+        "React",
+        "Node.js",
+        "Express.js",
+        "Groq AI API",
+        "MySQL"
+      ]
+    }
   ],
 
   certifications: [
