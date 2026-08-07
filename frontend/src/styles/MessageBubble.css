@@ -81,3 +81,9 @@
 .speak-btn:hover {
   opacity: 1;
 }
+
+@media (max-width: 600px) {
+  .message-bubble {
+    max-width: 82%;
+  }
+}
