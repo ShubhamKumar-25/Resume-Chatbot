@@ -1,122 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import axios from "axios";
+import ChatHeader from "./components/ChatHeader";
+import ChatWindow from "./components/ChatWindow";
+import ChatInput from "./components/ChatInput";
+import QuickQuestions from "./components/QuickQuestions";
+import "./styles/App.css";
+
+const API_URL = "http://localhost:5000/api/chat";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
+
+  // Message bhejne ka main function (typing ya quick-question dono se yahi call hoga)
+  const sendMessage = async (text) => {
+    // 1. User ka message turant UI me add karo
+    const userMessage = { sender: "user", text };
+    setMessages((prev) => [...prev, userMessage]);
+
+    // 2. "typing..." indicator on karo
+    setIsTyping(true);
+
+    try {
+      // 3. Backend ko call karo
+      const response = await axios.post(API_URL, { message: text });
+      const botReply = response.data.reply;
+
+      // 4. Bot ka reply add karo
+      // setMessages((prev) => [...prev, { sender: "bot", text: botReply }]);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: botReply, isNew: true },
+      ]);
+    } catch (error) {
+      console.error("Error fetching response:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "Sorry, something went wrong. Please try again later.",
+        },
+      ]);
+    } finally {
+      // 5. Typing indicator band karo (success ho ya error)
+      setIsTyping(false);
+    }
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app-container">
+      <div className="chat-card">
+        <ChatHeader />
 
-      <div className="ticks"></div>
+        <ChatWindow messages={messages} isTyping={isTyping} />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {messages.length === 0 && !isTyping && (
+          <QuickQuestions onSelect={sendMessage} />
+        )}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <ChatInput onSend={sendMessage} disabled={isTyping} />
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;

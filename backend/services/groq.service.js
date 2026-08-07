@@ -1,5 +1,5 @@
 const Groq = require("groq-sdk");
-const { ProfileModel } = require("../models/profile.model");
+const { ProfileModel } = require("../models/profile");
 
 // Groq client initialize karo (API key .env se aayegi)
 const groq = new Groq({
