@@ -54,6 +54,7 @@ const shubhamProfile = {
       "Google Gemini API",
       "Prompt Engineering",
       "AI Integration",
+      "LLM Basics",
     ],
 
     languages: [
@@ -67,6 +68,7 @@ const shubhamProfile = {
       "Git",
       "GitHub",
       "VS Code",
+      "intelliJ IDEA",
       "Postman",
       "Render",
       "Vercel",
