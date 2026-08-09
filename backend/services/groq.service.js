@@ -176,7 +176,7 @@ async function getChatResponse(userMessage) {
       ],
 
       // Lower temperature = more consistent/factual answers
-      temperature: 0.4,
+      temperature: 0.3,
 
       // Enough for recruiter questions without unnecessarily long answers
       max_tokens: 500,
