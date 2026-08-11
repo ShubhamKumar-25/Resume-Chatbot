@@ -6,7 +6,8 @@ import ChatInput from "./components/ChatInput";
 import QuickQuestions from "./components/QuickQuestions";
 import "./styles/App.css";
 
-const API_URL = "http://localhost:5000/api/chat";
+// const API_URL = "http://localhost:5000/api/chat";
+const API_URL = "https://resume-chatbot-5bsr.onrender.com";
 
 function App() {
   const [messages, setMessages] = useState([]);
