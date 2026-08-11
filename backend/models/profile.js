@@ -72,6 +72,7 @@ const shubhamProfile = {
       "Postman",
       "Render",
       "Vercel",
+      "CI/CD (GitHub Actions, etc.)",
     ],
   },
 
