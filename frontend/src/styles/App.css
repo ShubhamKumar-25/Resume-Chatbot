@@ -2,14 +2,15 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
+  height: 100%;
   font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(135deg, #616161 0%, #4e4e50 100%);
+  background: linear-gradient(135deg, #eef0ff 0%, #f7f3ff 100%);
 }
 
 .app-container {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,9 +20,9 @@ body {
 .chat-card {
   width: 100%;
   max-width: 480px;
-  height: 85vh;
+  height: 85dvh;
   max-height: 700px;
-  background: rgb(251, 250, 250);
+  background: white;
   border-radius: 16px;
   box-shadow: 0 10px 40px rgba(99, 102, 241, 0.15);
   display: flex;
@@ -29,7 +30,15 @@ body {
   overflow: hidden;
 }
 
-/* Mobile Responsive */
+/* Tablet aur chhote laptops */
+@media (max-width: 900px) {
+  .chat-card {
+    max-width: 90%;
+    height: 88dvh;
+  }
+}
+
+/* Mobile phones */
 @media (max-width: 600px) {
   .app-container {
     padding: 0;
@@ -37,9 +46,16 @@ body {
 
   .chat-card {
     width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-    border-radius: 0;
     max-width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+}
+
+/* Bahut chhoti height wale phones (jaise landscape mode) */
+@media (max-height: 500px) {
+  .chat-card {
+    height: 100dvh;
   }
 }
