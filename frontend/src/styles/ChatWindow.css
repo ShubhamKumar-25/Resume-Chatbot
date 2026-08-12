@@ -1,13 +1,3 @@
-/* .chat-window {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  padding: 20px 24px;
-  background: #fafafa;
-  display: flex;
-  flex-direction: column;
-} */
-
 .chat-window {
   flex: 1;
   min-height: 0;
@@ -16,6 +6,11 @@
   background: #fafafa;
   display: flex;
   flex-direction: column;
+}
+
+/* Jab tak koi message nahi hai, quick questions vertically center rahenge */
+.chat-window-empty {
+  justify-content: center;
 }
 
 /* Scrollbar styling */
