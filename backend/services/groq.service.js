@@ -161,7 +161,7 @@ async function getChatResponse(userMessage) {
     const systemPrompt = buildSystemPrompt();
 
     const response = await groq.chat.completions.create({
-        model: "qwen/qwen3.6-27b",
+        model: "openai/gpt-oss-120b",
       messages: [
         {
           role: "system",
