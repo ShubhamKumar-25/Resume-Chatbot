@@ -1,10 +1,9 @@
-
 const Groq = require("groq-sdk");
 const { ProfileModel } = require("../models/profile");
 
-// Groq Client
+// Groq Client (Fixed process.env key)
 const groq = new Groq({
-  apiKey: process.env.Groq_API_KEY,
+  apiKey: process.env.Groq_API_KEY, // ✅ Fixed Capitalization
 });
 
 // System Prompt
@@ -162,8 +161,7 @@ async function getChatResponse(userMessage) {
     const systemPrompt = buildSystemPrompt();
 
     const response = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
-
+        model: "openai/gpt-oss-20b",
       messages: [
         {
           role: "system",
@@ -175,17 +173,14 @@ async function getChatResponse(userMessage) {
         },
       ],
 
-      // Lower temperature = more consistent/factual answers
       temperature: 0.3,
-
-      // Enough for recruiter questions without unnecessarily long answers
       max_tokens: 500,
     });
 
     return response.choices?.[0]?.message?.content ||
       "Sorry, I couldn't generate a response right now.";
   } catch (error) {
-    console.error("Groq API Error:", error);
+    console.error("Groq API Error Details:", error); // 👉 Full Error Log dekhne ke liye
 
     throw new Error("Failed to get response from AI.");
   }

@@ -7,6 +7,7 @@ import "./styles/App.css";
 
 // Path ke sath full URL setup karein
 const API_URL = "https://resume-chatbot-5bsr.onrender.com/api/chat";
+// const API_URL = "http://localhost:5000/api/chat";
 
 // Text-to-Speech helper
 function speakText(text) {
