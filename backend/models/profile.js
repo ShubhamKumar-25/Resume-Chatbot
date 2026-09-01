@@ -6,7 +6,8 @@ const shubhamProfile = {
     role: "Full Stack MERN Developer",
     tagline:
       "Passionate Full Stack Developer with a strong interest in AI Integration, Web Development, and Problem Solving.",
-    location: "Bihar, India",
+    origin: "Bihar, India",
+    currentStudyLocation: "Punjab, India",
     email: "sk5989229@gmail.com",
     phone: "72507-27385",
     portfolio: "https://your-portfolio.com",
@@ -78,7 +79,36 @@ const shubhamProfile = {
 
   projects: [
     {
+      title: "AI Resume Analyzer",
+      isPrimary: true,
+      description:
+        "An AI-powered application that analyzes resumes, compares them with Job Descriptions, and provides improvement suggestions. Helps job seekers optimize resumes and enables HRs to shortlist candidates based on skills/experience and send automated email notifications.",
+      techStack: [
+        "React",
+        "Node.js",
+        "Express.js",
+        "MySQL",
+        "Groq AI",
+      ],
+    },
+
+    {
+      title: "AI Expense Tracker",
+      isPrimary: true,
+      description:
+        "Expense management system with AI-generated spending insights. Users track expenses and set budgets while AI analyzes spending patterns and categorizes transactions automatically.",
+      techStack: [
+        "React",
+        "Node.js",
+        "Express.js",
+        "MySQL",
+        "Gemini AI",
+      ],
+    },
+
+    {
       title: "Ask Shubham AI",
+      isPrimary: false,
       description:
         "An AI-powered interactive portfolio chatbot that answers recruiter questions based on my resume, projects, skills, education, and career goals.",
       techStack: [
@@ -97,35 +127,10 @@ const shubhamProfile = {
     },
 
     {
-      title: "AI Resume Analyzer",
-      description:
-        "An AI-powered application that analyzes resumes, compares them with Job Descriptions, and provides improvement suggestions. This project is helpful for job seekers to optimize their resumes for better chances of getting shortlisted. Also it helpfull for HR to analyze resumes and shortlist candidates based on their skills and experience and send emails notifying them about their selection or rejection.",
-      techStack: [
-        "React",
-        "Node.js",
-        "Express.js",
-        "MySQL",
-        "Groq AI",
-      ],
-    },
-
-    {
-      title: "AI Expense Tracker",
-      description:
-        "Expense management system with AI-generated spending insights. In this application, users can track their expenses and set their budget. The AI analyzes the spending patterns and provides insights to help users manage their finances better. Suppose a user spends money on like Pizza, the AI will set automatic in their food section.",
-      techStack: [
-        "React",
-        "Node.js",
-        "Express.js",
-        "MySQL",
-        "Gemini AI",
-      ],
-    },
-
-    {
       title: "AI Complaint Management System",
+      isPrimary: false,
       description:
-        "Complaint management platform where AI categorizes complaints and provides intelligent assistance. this is a web application where users can submit their complaints, and the AI will categorize them based on their nature and urgency. The AI will also provide suggestions for resolving the complaints and assist in tracking their status.",
+        "Complaint management platform where AI categorizes complaints based on nature/urgency and provides resolution suggestions while tracking status.",
       techStack: [
         "React",
         "Node.js",
@@ -136,8 +141,9 @@ const shubhamProfile = {
 
     {
       title: "My Own NexAI Application",
+      isPrimary: false,
       description:
-      "This is my own AI application where I have integrated Groq AI API. In this application, users can ask questions related to any topic, and the AI will provide answers based on its knowledge base. This application is designed to showcase my skills in AI integration and web development.",
+        "A general Q&A application integrating Groq AI API where users can ask questions on any topic and receive real-time AI responses.",
       techStack: [
         "React",
         "Node.js",
@@ -175,6 +181,7 @@ const shubhamProfile = {
     "Built multiple AI-integrated Full Stack projects.",
     "Hands-on experience with MERN Stack.",
     "Experience integrating LLM APIs into web applications.",
+    "Solved 250+ DSA problems on LeetCode & GeeksforGeeks."
   ],
 
   targetRoles: [
@@ -187,7 +194,7 @@ const shubhamProfile = {
 
   interviewQuestions: {
     introduction:
-      "Hi, I'm Shubham Kumar, a B.Tech Information Technology student passionate about Full Stack Development and Artificial Intelligence. I enjoy building real-world applications using React, Node.js, Express.js, MySQL, and AI APIs like Groq and Gemini. My goal is to become a Software Development Engineer where I can build scalable and intelligent applications.",
+      "I'm Shubham Kumar, a Full-Stack MERN Developer, and I am from Bihar, India. Currently, I am completing my B.Tech in Information Technology at Chandigarh Group of Colleges (CGC), Landran (expected 2027, CGPA 7.6).",
 
     whyHireMe:
       "I have strong fundamentals in MERN Stack, hands-on experience in AI integration, good problem-solving skills, and I enjoy learning new technologies quickly. I focus on building practical projects that solve real-world problems.",
@@ -195,13 +202,12 @@ const shubhamProfile = {
     futureGoal:
       "My goal is to become a highly skilled Software Engineer specializing in Full Stack Development and AI-powered applications.",
 
-    hobbies:
-      [
-        "Learning new technologies",
-        "Playing Cricket",
-        "Listening to music",
-        "Traveling",
-      ],
+    hobbies: [
+      "Learning new technologies",
+      "Playing Cricket",
+      "Listening to music",
+      "Traveling",
+    ],
   },
 
   chatbotRules: {
@@ -209,9 +215,10 @@ const shubhamProfile = {
       "Professional, friendly, confident, and concise.",
 
     responseStyle:
-      "Always answer as if you are Shubham Kumar. Use first-person language like 'I', 'My', and 'Me'. If information is unavailable, politely say that it is not mentioned instead of making assumptions.",
+      "Always answer as Shubham Kumar in first-person ('I', 'My', 'Me'). Keep introduction structure intact and never say 'based in Bihar'. Use 'from Bihar, India'.",
 
     restrictions: [
+      "Never say 'based in Bihar' or 'a developer based in Bihar'. Always say 'from Bihar, India'.",
       "Never generate fake achievements.",
       "Never invent experience.",
       "Never modify CGPA.",
@@ -220,7 +227,7 @@ const shubhamProfile = {
   },
 };
 
-// Model Class (optional but clean architecture)
+// Model Class
 class ProfileModel {
   static getProfile() {
     return shubhamProfile;
@@ -231,3 +238,5 @@ module.exports = {
   shubhamProfile,
   ProfileModel,
 };
+
+

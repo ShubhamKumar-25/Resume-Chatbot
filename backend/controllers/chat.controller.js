@@ -37,10 +37,9 @@
 
 
 
-
 const { getChatResponse } = require("../services/groq.service");
 
-// POST /api/chat handle karne wala controller
+// POST /api/chat controller
 async function handleChat(req, res) {
   try {
     const { message } = req.body;
@@ -53,7 +52,7 @@ async function handleChat(req, res) {
       });
     }
 
-    // Service call karo jo Groq se response leke aayegi
+    // Groq service call
     const reply = await getChatResponse(message);
 
     return res.status(200).json({
@@ -61,15 +60,20 @@ async function handleChat(req, res) {
       reply,
     });
   } catch (error) {
-    // 🛑 EXACT ERROR KO SYSTEM TERMINAL PAR DETAILED PRINT KARNE KE LIYE:
-    console.error("==================== DEBUG ERROR START ====================");
-    console.error("Chat Controller Full Error:", error);
-    console.error("Groq Response Error Data:", error?.response?.data || error?.cause || "No nested cause");
-    console.error("==================== DEBUG ERROR END ====================");
+    // Development ke liye detailed logs
+    if (process.env.NODE_ENV === "development") {
+      console.error("==================== DEBUG ERROR START ====================");
+      console.error("Chat Controller Full Error:", error);
+      console.error("Groq Response Error Data:", error?.response?.data || error?.cause || "No nested cause");
+      console.error("==================== DEBUG ERROR END ====================");
+    } else {
+      // Production me concise log
+      console.error("Chat Controller Error:", error.message);
+    }
 
     return res.status(500).json({
       success: false,
-      error: error.message || "Something went wrong while generating response",
+      error: "Something went wrong while generating response",
     });
   }
 }

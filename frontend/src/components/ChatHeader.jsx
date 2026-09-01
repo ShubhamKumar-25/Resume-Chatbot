@@ -15,7 +15,7 @@ function ChatHeader() {
       </div>
 
       <a
-        href="/resume (1).pdf"
+        href="/resume.pdf"
         download="Shubham_Kumar_Resume.pdf"
         className="resume-btn"
         title="Download Resume"
