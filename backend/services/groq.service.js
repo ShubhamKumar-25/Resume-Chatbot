@@ -324,7 +324,6 @@
 
 
 
-
 const Groq = require("groq-sdk");
 const { ProfileModel } = require("../models/profile");
 
@@ -332,7 +331,7 @@ const groq = new Groq({
   apiKey: process.env.Groq_API_KEY,
 });
 
-// Compressed & Lightweight Profile Payload
+// Lightweight Profile Context
 function getCompactProfileContext() {
   const profile = ProfileModel.getProfile();
   
@@ -392,30 +391,28 @@ function sanitizeOutput(text) {
     .replace(/working in Bihar/gi, "from Bihar, India");
 }
 
-// Streaming Response Service
-async function getChatStreamResponse(userMessage) {
+async function getChatResponse(userMessage) {
   try {
     const systemPrompt = buildSystemPrompt();
 
-    const stream = await groq.chat.completions.create({
-      model: "openai/gpt-oss-20b", // Fastest Groq Model
+    const completion = await groq.chat.completions.create({
+      model: "openai/gpt-oss-20b", // Ultra-fast model
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userMessage },
       ],
       temperature: 0.2,
       max_tokens: 350,
-      stream: true,
     });
 
-    return stream;
+    const reply = completion.choices[0]?.message?.content || "";
+    return sanitizeOutput(reply);
   } catch (error) {
-    console.error("Groq Stream API Error:", error);
-    throw new Error("Failed to initialize Groq AI Stream.");
+    console.error("Groq API Error:", error);
+    throw new Error("Failed to generate AI response.");
   }
 }
 
 module.exports = {
-  getChatStreamResponse,
-  sanitizeOutput
+  getChatResponse
 };

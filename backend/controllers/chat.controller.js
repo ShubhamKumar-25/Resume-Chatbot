@@ -95,7 +95,7 @@
 
 
 
-const { getChatStreamResponse, sanitizeOutput } = require("../services/groq.service");
+const { getChatResponse } = require("../services/groq.service");
 
 async function handleChat(req, res) {
   try {
@@ -108,35 +108,19 @@ async function handleChat(req, res) {
       });
     }
 
-    // Set headers for SSE Streaming
-    res.setHeader("Content-Type", "text/event-stream");
-    res.setHeader("Cache-Control", "no-cache");
-    res.setHeader("Connection", "keep-alive");
+    const reply = await getChatResponse(message);
 
-    const stream = await getChatStreamResponse(message);
-
-    for await (const chunk of stream) {
-      const content = chunk.choices[0]?.delta?.content || "";
-      if (content) {
-        const sanitizedContent = sanitizeOutput(content);
-        res.write(`data: ${JSON.stringify({ content: sanitizedContent })}\n\n`);
-      }
-    }
-
-    res.write("data: [DONE]\n\n");
-    return res.end();
+    return res.status(200).json({
+      success: true,
+      reply: reply,
+    });
 
   } catch (error) {
     console.error("Chat Controller Error:", error);
-    if (!res.headersSent) {
-      return res.status(500).json({
-        success: false,
-        error: "Something went wrong while generating response",
-      });
-    } else {
-      res.write(`data: ${JSON.stringify({ error: "Stream error" })}\n\n`);
-      return res.end();
-    }
+    return res.status(500).json({
+      success: false,
+      error: "Something went wrong while generating response",
+    });
   }
 }
 

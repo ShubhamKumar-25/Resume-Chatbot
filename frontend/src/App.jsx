@@ -105,75 +105,37 @@ function App() {
   const sendMessage = async (text) => {
     if (!text || !text.trim() || isTyping) return;
 
-    // 1. User message display
+    // 1. User message set karo
     const userMessage = { sender: "user", text };
     setMessages((prev) => [...prev, userMessage]);
     setIsTyping(true);
 
-    // 2. Empty bot message placeholder for streaming
-    setMessages((prev) => [...prev, { sender: "bot", text: "" }]);
-
     try {
+      // 2. Simple API Call
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
       });
 
-      if (!response.ok) throw new Error("API call failed");
+      const data = await response.json();
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder("utf-8");
-      let fullBotReply = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split("\n");
-
-        for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            const dataStr = line.replace("data: ", "").trim();
-            if (dataStr === "[DONE]") break;
-
-            try {
-              const parsed = JSON.parse(dataStr);
-              if (parsed.content) {
-                fullBotReply += parsed.content;
-
-                // Real-time UI stream update
-                setMessages((prev) => {
-                  const updated = [...prev];
-                  updated[updated.length - 1] = {
-                    sender: "bot",
-                    text: fullBotReply,
-                  };
-                  return updated;
-                });
-              }
-            } catch (err) {
-              // Ignore partial JSON chunks parsing errors
-            }
-          }
-        }
-      }
-
-      // Voice output after full stream completes
-      if (fullBotReply) {
-        speakText(fullBotReply);
+      if (data.success && data.reply) {
+        const botMessage = { sender: "bot", text: data.reply };
+        setMessages((prev) => [...prev, botMessage]);
+        speakText(data.reply);
+      } else {
+        throw new Error(data.error || "Failed to get reply");
       }
     } catch (error) {
-      console.error("Streaming error:", error);
-      setMessages((prev) => {
-        const updated = [...prev];
-        updated[updated.length - 1] = {
+      console.error("API Error:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
           sender: "bot",
-          text: "Sorry, something went wrong. Please try again later.",
-        };
-        return updated;
-      });
+          text: "Sorry, I am facing trouble connecting right now. Please try again.",
+        },
+      ]);
     } finally {
       setIsTyping(false);
     }
