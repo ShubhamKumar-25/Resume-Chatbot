@@ -80,6 +80,84 @@
 
 // export default App;
 
+// import { useState } from "react";
+// import ChatHeader from "./components/ChatHeader";
+// import ChatWindow from "./components/ChatWindow";
+// import ChatInput from "./components/ChatInput";
+// import "./styles/App.css";
+
+// const API_URL = "https://resume-chatbot-5bsr.onrender.com/api/chat";
+
+// function speakText(text) {
+//   if (!window.speechSynthesis) return;
+//   window.speechSynthesis.cancel();
+//   const utterance = new SpeechSynthesisUtterance(text);
+//   utterance.lang = "en-IN";
+//   utterance.rate = 1;
+//   utterance.pitch = 1;
+//   window.speechSynthesis.speak(utterance);
+// }
+
+// function App() {
+//   const [messages, setMessages] = useState([]);
+//   const [isTyping, setIsTyping] = useState(false);
+
+//   const sendMessage = async (text) => {
+//     if (!text || !text.trim() || isTyping) return;
+
+//     // 1. User message set karo
+//     const userMessage = { sender: "user", text };
+//     setMessages((prev) => [...prev, userMessage]);
+//     setIsTyping(true);
+
+//     try {
+//       // 2. Simple API Call
+//       const response = await fetch(API_URL, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ message: text }),
+//       });
+
+//       const data = await response.json();
+
+//       if (data.success && data.reply) {
+//         const botMessage = { sender: "bot", text: data.reply };
+//         setMessages((prev) => [...prev, botMessage]);
+//         speakText(data.reply);
+//       } else {
+//         throw new Error(data.error || "Failed to get reply");
+//       }
+//     } catch (error) {
+//       console.error("API Error:", error);
+//       setMessages((prev) => [
+//         ...prev,
+//         {
+//           sender: "bot",
+//           text: "Sorry, I am facing trouble connecting right now. Please try again.",
+//         },
+//       ]);
+//     } finally {
+//       setIsTyping(false);
+//     }
+//   };
+
+//   return (
+//     <div className="app-container">
+//       <div className="chat-card">
+//         <ChatHeader />
+//         <ChatWindow
+//           messages={messages}
+//           isTyping={isTyping}
+//           onQuickSelect={sendMessage}
+//         />
+//         <ChatInput onSend={sendMessage} disabled={isTyping} />
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default App;
+
 import { useState } from "react";
 import ChatHeader from "./components/ChatHeader";
 import ChatWindow from "./components/ChatWindow";
@@ -102,16 +180,49 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
 
+  // ChatGPT Jaisa Line-by-Line / Word-by-Word Typing Effect
+  const typeWriterEffect = (fullText) => {
+    // Message placeholder create karo
+    setMessages((prev) => [...prev, { sender: "bot", text: "" }]);
+
+    const words = fullText.split(" ");
+    let currentText = "";
+    let index = 0;
+
+    const interval = setInterval(() => {
+      if (index < words.length) {
+        currentText += (index === 0 ? "" : " ") + words[index];
+        const updatedText = currentText;
+
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            sender: "bot",
+            text: updatedText,
+          };
+          return updated;
+        });
+
+        index++;
+      } else {
+        clearInterval(interval);
+        setIsTyping(false);
+        // Poora type hone ke baad voice output
+        speakText(fullText);
+      }
+    }, 45); // Adjust typing speed here (45ms per word)
+  };
+
   const sendMessage = async (text) => {
     if (!text || !text.trim() || isTyping) return;
 
-    // 1. User message set karo
+    // 1. User Message Display
     const userMessage = { sender: "user", text };
     setMessages((prev) => [...prev, userMessage]);
     setIsTyping(true);
 
     try {
-      // 2. Simple API Call
+      // 2. Fast API Call
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -121,9 +232,8 @@ function App() {
       const data = await response.json();
 
       if (data.success && data.reply) {
-        const botMessage = { sender: "bot", text: data.reply };
-        setMessages((prev) => [...prev, botMessage]);
-        speakText(data.reply);
+        // 3. Typing Effect Trigger Karo
+        typeWriterEffect(data.reply);
       } else {
         throw new Error(data.error || "Failed to get reply");
       }
@@ -136,7 +246,6 @@ function App() {
           text: "Sorry, I am facing trouble connecting right now. Please try again.",
         },
       ]);
-    } finally {
       setIsTyping(false);
     }
   };
