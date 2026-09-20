@@ -9,8 +9,8 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173", // Vite default port
   "http://localhost:3000", // React App default port
-  process.env.CLIENT_URL   // Render Environment variable for Frontend (e.g. https://your-app.vercel.app)
-].filter(Boolean); // removes undefined if CLIENT_URL is not set yet
+  process.env.CLIENT_URL  
+].filter(Boolean); 
 
 // 2. Optimized CORS Configuration
 const corsOptions = {
@@ -28,19 +28,18 @@ const corsOptions = {
   optionsSuccessStatus: 200 // For legacy browser compatibility
 };
 
-// Middlewares
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Routes
+
 app.use("/api", chatRoutes);
 
-// Test route
 app.get("/", (req, res) => {
   res.send("Resume Chatbot Backend is running ✅");
 });
 
-// Server start
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running on port ${PORT}`);
